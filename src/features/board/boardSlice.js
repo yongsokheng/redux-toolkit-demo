@@ -1,0 +1,112 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+const data = {
+  id: 1,
+  name: "Board Demo",
+  lists: [
+    {
+      id: 1,
+      name: "TODO",
+      tasks: [
+        {id: 1, name: "task 1"},
+        {id: 2, name: "task 2"},
+        {id: 3, name: "task 3"},
+        {id: 4, name: "task 4"},
+        {id: 5, name: "task 5"},
+      ]
+    },
+
+    {
+      id: 2,
+      name: "In Progress",
+      tasks: [
+        {id: 1, name: "task 1"},
+        {id: 2, name: "task 2"},
+        {id: 3, name: "task 3"},
+        {id: 4, name: "task 4"},
+        {id: 5, name: "task 5"},
+      ]
+    },
+
+    {
+      id: 3,
+      name: "Done",
+      tasks: [
+        {id: 1, name: "task 1"},
+        {id: 2, name: "task 2"},
+        {id: 3, name: "task 3"},
+        {id: 4, name: "task 4"},
+        {id: 5, name: "task 5"},
+      ]
+    }
+  ]
+}
+
+const initialState = {
+  board: {lists: [{tasks: []}]},
+  status: 'idle',
+};
+
+export const fetchBoardDetail = createAsyncThunk(
+  'board/fetchDetail',
+  async () => {
+    const response = await new Promise((resolve) =>
+      setTimeout(() => resolve({ data: data }), 2000)
+    );
+    return response.data;
+  }
+);
+
+export const addTask = createAsyncThunk(
+  'board/addTask',
+  async (task) => {
+    const response = await new Promise((resolve) =>
+      setTimeout(() => resolve({ data: {id: new Date().getTime(), name: task.name, listId: task.listId} }), 100)
+    );
+    return response.data;
+  }
+);
+
+export const addList = createAsyncThunk(
+  'board/addList',
+  async (listName) => {
+    const response = await new Promise((resolve) =>
+      setTimeout(() => resolve({ data: {id: new Date().getTime(), name: listName, tasks: []} }), 100)
+    );
+    return response.data;
+  }
+);
+
+export const boardSlice = createSlice({
+  name: 'board',
+  initialState,
+  reducers: {
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBoardDetail.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchBoardDetail.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.board = action.payload;
+      })
+
+      .addCase(addTask.pending, (state) => {
+      })
+      .addCase(addTask.fulfilled, (state, action) => {
+        let list = state.board.lists.find(list => list.id === action.payload.listId);
+        list.tasks.unshift(action.payload);
+      })
+
+      .addCase(addList.pending, (state) => {
+      })
+      .addCase(addList.fulfilled, (state, action) => {
+        state.board.lists.push(action.payload);
+      })
+  }
+});
+
+export const {} = boardSlice.actions;
+export const selectBoard = (state) => state.board;
+export default boardSlice.reducer;

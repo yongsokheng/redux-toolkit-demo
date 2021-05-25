@@ -1,0 +1,129 @@
+.listItem {
+  float: left;
+  padding: 10px;
+  min-width: 290px;
+  width: 290px;
+  height: 100%;
+  border-radius: 8px;
+  background-color: #f9f7f5;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+  margin: 10px;
+}
+
+.taskItem {
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 1px 2px 1px 1px rgb(155 155 155 / 20%);
+  color: #9b9b9b;
+  position: relative;
+  padding: 15px;
+  cursor: pointer;
+  word-break: break-word;
+  margin-bottom: 10px;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 200px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.createTask {
+  font-size: 12px;
+  margin-top: 5px;
+  padding: 7px 38px;
+  background-color: #fff;
+  color: #4dabff;
+  border: 1px solid transparent;
+  font-weight: 600;
+  line-height: 18px;
+  border-radius: 8px;
+  transition: all .3s ease;
+  cursor: pointer;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.btnContainer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.btnPrimary {
+  background-color: #4dabff;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  border-radius: 8px;
+  padding: 10px 38px;
+  transition: all .3s ease;
+  border: 1px solid transparent;
+  font-size: 11px;
+  padding: 4px 14px;
+  min-width: 80px;
+  margin-left: 10px;
+}
+
+.btnSecondary {
+  background-color: #edf6ff;
+  color: #4dabff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  border-radius: 8px;
+  padding: 10px 38px;
+  transition: all .3s ease;
+  border: 1px solid transparent;
+  font-size: 11px;
+  padding: 4px 14px;
+  min-width: 80px;
+  margin-left: 10px;
+}
+
+.formControl {
+  display: block;
+  width: 90%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  min-height: 50px;
+  resize: none;
+  border: none;
+  box-shadow: 0 1px 1px rgb(155 155 155 / 20%);
+  border-top: 1px solid #efefef;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #4a4a4a;
+}
+
+.formControl:focus {
+  box-shadow: 0 1px 1px rgb(155 155 155 / 20%);
+  outline: none;
+  border-top: 1px solid #efefef;
+}
+
+.createList {
+  font-size: 12px;
+  margin-top: 5px;
+  padding: 7px 38px;
+  background-color: #fff;
+  color: #4dabff;
+  border: 1px solid transparent;
+  font-weight: 600;
+  line-height: 18px;
+  border-radius: 8px;
+  transition: all .3s ease;
+  cursor: pointer;
+  margin-bottom: 10px;
+}

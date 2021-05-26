@@ -77,6 +77,16 @@ export const updateTask = createAsyncThunk(
   }
 );
 
+export const deleteTask = createAsyncThunk(
+  'board/deleteTask',
+  async (task) => {
+    const response = await new Promise((resolve) =>
+      setTimeout(() => resolve({ data: {id: task.id, listId: task.listId} }), 100)
+    );
+    return response.data;
+  }
+);
+
 
 export const addList = createAsyncThunk(
   'board/addList',
@@ -93,6 +103,16 @@ export const updateList = createAsyncThunk(
   async (list) => {
     const response = await new Promise((resolve) =>
       setTimeout(() => resolve({ data: {id: list.id, name: list.name} }), 100)
+    );
+    return response.data;
+  }
+);
+
+export const deleteList = createAsyncThunk(
+  'board/deleteList',
+  async (list) => {
+    const response = await new Promise((resolve) =>
+      setTimeout(() => resolve({ data: {id: list.id} }), 100)
     );
     return response.data;
   }
@@ -128,6 +148,13 @@ export const boardSlice = createSlice({
         task.name = action.payload.name;
       })
 
+      .addCase(deleteTask.pending, (state) => {
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        let list = state.board.lists.find(list => list.id === action.payload.listId);
+        list.tasks = list.tasks.filter(task => task.id !== action.payload.id);
+      })
+
       .addCase(addList.pending, (state) => {
       })
       .addCase(addList.fulfilled, (state, action) => {
@@ -139,6 +166,12 @@ export const boardSlice = createSlice({
       .addCase(updateList.fulfilled, (state, action) => {
         let list = state.board.lists.find(list => list.id === action.payload.id);
         list.name = action.payload.name;
+      })
+
+      .addCase(deleteList.pending, (state) => {
+      })
+      .addCase(deleteList.fulfilled, (state, action) => {
+        state.board.lists = state.board.lists.filter(list => list.id !== action.payload.id);
       })
   }
 });

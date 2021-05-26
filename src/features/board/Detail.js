@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './BoardDetail.module.css';
-import { fetchBoardDetail, addTask, selectBoard, addList } from './boardSlice';
+import { fetchBoardDetail, addTask, selectBoard, addList, deleteTask, deleteList } from './boardSlice';
 import { ListModal } from './ListModal';
 import { TaskModal } from './TaskModal';
 
@@ -35,6 +35,10 @@ export function BoardDetail() {
                     setShowListModal(true);
                   }}>
                   <small>Edit</small>
+                </a>
+
+                <a href="#" className="float-right mr-2 text-danger" onClick={() => dispatch(deleteList(list))}>
+                  <small>Delete</small>
                 </a>
               </span>
 
@@ -73,12 +77,18 @@ export function BoardDetail() {
 
               {list.tasks.map((task) => (
                 <div>
-                  <div className={styles.taskItem} key={task.id} onClick={() => {
+                  <div className={styles.taskItem} key={task.id}>
+                    {task.name}
+                    <a href="#" className="float-right" onClick={() => {
                       setTaskObject(task);
                       setShowTaskModal(true);
-                    }}
-                  >
-                    {task.name}
+                    }}>
+                      <small>Edit</small>
+                    </a>
+
+                    <a href="#" className="float-right text-danger mr-2" onClick={() => dispatch(deleteTask(task))}>
+                      <small>Delete</small>
+                    </a>
                   </div>
                 </div>
 

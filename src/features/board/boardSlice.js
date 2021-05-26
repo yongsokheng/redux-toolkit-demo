@@ -8,11 +8,11 @@ const data = {
       id: 1,
       name: "TODO",
       tasks: [
-        {id: 1, name: "task 1"},
-        {id: 2, name: "task 2"},
-        {id: 3, name: "task 3"},
-        {id: 4, name: "task 4"},
-        {id: 5, name: "task 5"},
+        {id: 1, name: "task 1", listId: 1},
+        {id: 2, name: "task 2", listId: 1},
+        {id: 3, name: "task 3", listId: 1},
+        {id: 4, name: "task 4", listId: 1},
+        {id: 5, name: "task 5", listId: 1},
       ]
     },
 
@@ -20,11 +20,11 @@ const data = {
       id: 2,
       name: "In Progress",
       tasks: [
-        {id: 1, name: "task 1"},
-        {id: 2, name: "task 2"},
-        {id: 3, name: "task 3"},
-        {id: 4, name: "task 4"},
-        {id: 5, name: "task 5"},
+        {id: 1, name: "task 1", listId: 2},
+        {id: 2, name: "task 2", listId: 2},
+        {id: 3, name: "task 3", listId: 2},
+        {id: 4, name: "task 4", listId: 2},
+        {id: 5, name: "task 5", listId: 2},
       ]
     },
 
@@ -32,11 +32,11 @@ const data = {
       id: 3,
       name: "Done",
       tasks: [
-        {id: 1, name: "task 1"},
-        {id: 2, name: "task 2"},
-        {id: 3, name: "task 3"},
-        {id: 4, name: "task 4"},
-        {id: 5, name: "task 5"},
+        {id: 1, name: "task 1", listId: 3},
+        {id: 2, name: "task 2", listId: 3},
+        {id: 3, name: "task 3", listId: 3},
+        {id: 4, name: "task 4", listId: 3},
+        {id: 5, name: "task 5", listId: 3},
       ]
     }
   ]
@@ -67,11 +67,32 @@ export const addTask = createAsyncThunk(
   }
 );
 
+export const updateTask = createAsyncThunk(
+  'board/updateTask',
+  async (task) => {
+    const response = await new Promise((resolve) =>
+      setTimeout(() => resolve({ data: {id: task.id, name: task.name, listId: task.listId} }), 100)
+    );
+    return response.data;
+  }
+);
+
+
 export const addList = createAsyncThunk(
   'board/addList',
   async (listName) => {
     const response = await new Promise((resolve) =>
       setTimeout(() => resolve({ data: {id: new Date().getTime(), name: listName, tasks: []} }), 100)
+    );
+    return response.data;
+  }
+);
+
+export const updateList = createAsyncThunk(
+  'board/updateList',
+  async (list) => {
+    const response = await new Promise((resolve) =>
+      setTimeout(() => resolve({ data: {id: list.id, name: list.name} }), 100)
     );
     return response.data;
   }
@@ -99,10 +120,25 @@ export const boardSlice = createSlice({
         list.tasks.unshift(action.payload);
       })
 
+      .addCase(updateTask.pending, (state) => {
+      })
+      .addCase(updateTask.fulfilled, (state, action) => {
+        let list = state.board.lists.find(list => list.id === action.payload.listId);
+        let task = list.tasks.find(task => task.id === action.payload.id);
+        task.name = action.payload.name;
+      })
+
       .addCase(addList.pending, (state) => {
       })
       .addCase(addList.fulfilled, (state, action) => {
         state.board.lists.push(action.payload);
+      })
+
+      .addCase(updateList.pending, (state) => {
+      })
+      .addCase(updateList.fulfilled, (state, action) => {
+        let list = state.board.lists.find(list => list.id === action.payload.id);
+        list.name = action.payload.name;
       })
   }
 });
